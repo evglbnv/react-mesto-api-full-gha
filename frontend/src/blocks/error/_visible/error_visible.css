@@ -1,0 +1,10 @@
+.error_visible {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  top: calc(100% + 3px);
+}
