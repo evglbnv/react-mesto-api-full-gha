@@ -82,7 +82,7 @@ const login = (req, res, next) => {
       if (!matched) {
         return Promise.reject(new AuthenticationError('Неправильные почта или пароль'));
       } const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      res.send({ user, token });
+      res.status(200).send({ data: token });
     })
     .catch((err) => next(err));
 };
