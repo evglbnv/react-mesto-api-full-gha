@@ -92,7 +92,7 @@ class Api {
 // //   }
 
 //   deleteLike(id) {
-//     return fetch(`${this.baseUrl}/cards/${id}/likes `, {
+//     return fetch(`${this.baseUrl}/cards/${i d}/likes `, {
 //       method: "DELETE",
 //       headers: this.headers,
 //     }).then(this._checkResponse);
@@ -100,6 +100,7 @@ class Api {
 // // }
 
 export const api = new Api({
+  // baseUrl: "https://api.evglbnv.nomoredomains.rocks",
   baseUrl: "http://localhost:3000",
   headers: {
     authorization: 'Bearer ' + localStorage.getItem('token'),

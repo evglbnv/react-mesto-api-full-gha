@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-const { JWT_SECRET } = process.env;
+// const { JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/user');
@@ -79,7 +79,7 @@ const login = (req, res, next) => {
       const matched = bcrypt.compare(password, user.password);
       if (!matched) {
         return Promise.reject(new AuthenticationError('Неправильные почта или пароль'));
-      } const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      } const token = jsonwebtoken.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
     .catch((err) => next(err));
@@ -89,10 +89,14 @@ const login = (req, res, next) => {
 //   const { email, password } = req.body;
 //   return User.findUserByCredentials(email, password)
 //     .then((user) => {
+//     // аутентификация успешна! пользователь в переменной user
+//     // создадим токен сроком на неделю.
+//     // В пейлоуд токена записываем только свойство _id,
+//     // которое содержит идентификатор пользователя
 //       const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-//       res.send({ token });
+//       res.send({ token }); // отправка токена в теле ответа
 //     })
-//     .catch((err) => next(err));
+//     .catch(next);
 // };
 
 // const login = (req, res, next) => {
