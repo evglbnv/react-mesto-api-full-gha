@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const AuthenticationError = require('../error/authenticationError');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -37,5 +39,30 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 });
+
+userSchema.static.findUserByCredentials = function (email, password) {
+  return this.findOne({ email }) // this - User's model
+    .select('+password')
+    .then((user) => {
+      if (!user) {
+      // получаем объект если почта и пароль подошли
+      // не нашелся - отклоняем промис
+        return Promise.reject(
+          new AuthenticationError('Incorrect email or password'),
+        );
+      }
+      // нашелся сравниваем хеши
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            // отклоняем промис
+            return Promise.reject(
+              new AuthenticationError('Incorrect email or password'),
+            );
+          }
+          return user;
+        });
+    });
+};
 
 module.exports = mongoose.model('user', userSchema);

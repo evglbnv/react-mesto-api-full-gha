@@ -1,15 +1,13 @@
 /* eslint-disable consistent-return */
-const jsonwebtoken = require('jsonwebtoken');
-
 const { JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt');
+const jsonwebtoken = require('jsonwebtoken');
+const User = require('../models/user');
 
 const NotFoundError = require('../error/notFoundError');
 const BadRequestError = require('../error/badRequest');
 const ConflictError = require('../error/conflictError');
 const AuthenticationError = require('../error/authenticationError');
-
-const User = require('../models/user');
 
 const getUsers = (req, res, next) => {
   User.find({}).then((users) => res
@@ -21,7 +19,7 @@ const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(new NotFoundError('Такого пользователя не существует'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -82,10 +80,30 @@ const login = (req, res, next) => {
       if (!matched) {
         return Promise.reject(new AuthenticationError('Неправильные почта или пароль'));
       } const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      res.status(200).send({ data: token });
+      res.send({ token });
     })
     .catch((err) => next(err));
 };
+
+// const login = (req, res, next) => {
+//   const { email, password } = req.body;
+//   return User.findUserByCredentials(email, password)
+//     .then((user) => {
+//       const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+//       res.send({ token });
+//     })
+//     .catch((err) => next(err));
+// };
+
+// const login = (req, res, next) => {
+//   const { email, password } = req.body;
+//   return User.findUserByCredentials(email, password)
+//     .then((user) => {
+//       const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+//       res.send({ token }); // отправка токена в теле ответа
+//     })
+//     .catch(next);
+// };
 
 const updateProfile = (req, res, next) => {
   const { name, about } = req.body;
@@ -94,7 +112,7 @@ const updateProfile = (req, res, next) => {
     req.user._id,
     { name, about },
     { new: true, runValidators: true },
-  ).orFail().then((user) => res.send({ data: user }))
+  ).orFail().then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         return next(new NotFoundError('Такого пользователя не существует'));
@@ -109,7 +127,7 @@ const updateAvatar = (req, res, next) => {
     req.user._id,
     { avatar },
     { new: true, runValidators: true },
-  ).orFail().then((user) => res.send({ data: user })).catch((err) => {
+  ).orFail().then((user) => res.send(user)).catch((err) => {
     if (err.name === 'CastError') {
       return next(new BadRequestError('Такого пользователя не существует'));
     }

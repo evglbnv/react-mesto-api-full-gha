@@ -53,7 +53,7 @@ function App() {
           image: unionBlack,
         });
         setIsRegistrationPopupOpen(true);
-        navigate("/sign-in");
+        navigate("/signin");
       })
       .catch((err) => {
         setRegistrationInfoDataPopup({
@@ -89,7 +89,7 @@ function App() {
       appAuth
         .getContent(token)
         .then((res) => {
-          setUserEmail(res.data.email);
+          setUserEmail(res.email);
           setLoggedIn(true);
           navigate("/");
         })
@@ -100,7 +100,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
 
     api
       .changeLikeCardStatus(card._id, !isLiked)
@@ -208,7 +208,7 @@ function App() {
   function signOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    navigate("/sign-in");
+    navigate("/signin");
   }
 
   return (
@@ -217,11 +217,11 @@ function App() {
         <Header signOut={signOut} userEmail={userEmail} />
         <Routes>
           <Route
-            path="/sign-up"
+            path="/signup"
             element={<Register handleRegister={handleRegister}></Register>}
           />
           <Route
-            path="/sign-in"
+            path="/signin"
             element={<Login handleLogin={handleLogin}></Login>}
           />
           <Route

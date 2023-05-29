@@ -1,4 +1,5 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+// export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = 'http://localhost:3000'
 
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка : ${res.status}`);
@@ -27,15 +28,22 @@ export const authorize = (data) => {
       password: data.password,
       email: data.email,
     }),
-  }).then(getResponse);
+  }).then(getResponse)
+  // .then((data) => {
+  //   localStorage.setItem('jwt', data.token)
+  //   return data
+  // });
 };
 
-export const getContent = (token) => {
+// checktoken
+export const getContent = () => {
+  const token = localStorage.getItem('token')
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      'Accept': 'application/json',
+      'Content-Type': "application/json",
+      'Authorization': `Bearer ${token}`,
     },
   }).then(getResponse);
 };
