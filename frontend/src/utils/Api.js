@@ -100,8 +100,8 @@ class Api {
 // // }
 
 export const api = new Api({
-  // baseUrl: "https://api.evglbnv.nomoredomains.rocks",
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://api.evglbnv.nomoredomains.rocks",
+  // baseUrl: "http://localhost:3000",
   headers: {
     authorization: 'Bearer ' + localStorage.getItem('token'),
     "Content-Type": "application/json",
