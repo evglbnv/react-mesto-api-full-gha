@@ -21,6 +21,12 @@ mongoose
   .then(() => console.log('Connected'))
   .catch((error) => console.log(`Error during connection ${error}`));
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use('/', router);
 app.use(errors());
 app.use(handleErrors);
