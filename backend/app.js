@@ -23,7 +23,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors(allowedCors));
-app.use(requestLogger);
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -38,7 +38,7 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-
+app.use(requestLogger);
 app.use('/', router);
 app.use(errorLogger);
 app.use(errors());
