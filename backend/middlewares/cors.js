@@ -1,11 +1,11 @@
-const allowedCors = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://evglbnv.nomoredomains.rocks',
-    'http://evglbnv.nomoredomains.rocks/',
-  ],
-};
+const allowedCors = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://evglbnv.nomoredomains.rocks',
+  'http://evglbnv.nomoredomains.rocks',
+  'https://api.evglbnv.nomoredomains.rocks/',
+  'http://api.evglbnv.nomoredomains.rocks/',
+];
 
 module.exports = (req, res, next) => {
   const { method } = req;
