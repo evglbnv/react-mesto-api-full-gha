@@ -7,7 +7,7 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const { handleErrors } = require('./middlewares/handleErrors');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+// const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const allowedCors = [
   'http://localhost:3000',
@@ -23,7 +23,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors(allowedCors));
-app.use(requestLogger);
+// app.use(requestLogger);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -40,7 +40,7 @@ app.get('/crash-test', () => {
 });
 
 app.use('/', router);
-app.use(errorLogger);
+// app.use(errorLogger);
 app.use(errors());
 app.use(handleErrors);
 
