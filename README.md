@@ -4,7 +4,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 84.252.131.28
+IP 84.252.131.28
 
 Frontend https://https://evglbnv.nomoredomains.rocks/
 
