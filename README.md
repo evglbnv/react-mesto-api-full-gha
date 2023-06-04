@@ -6,6 +6,6 @@
 
 IP 84.252.131.28
 
-Frontend https://https://evglbnv.nomoredomains.rocks/
+Frontend https://evglbnv.nomoredomains.rocks/
 
 Backend https://api.evglbnv.nomoredomains.rocks/
