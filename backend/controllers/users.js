@@ -79,7 +79,8 @@ const login = (req, res, next) => {
       const matched = bcrypt.compare(password, user.password);
       if (!matched) {
         return Promise.reject(new AuthenticationError('Неправильные почта или пароль'));
-      } const token = jsonwebtoken.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      }
+      const token = jsonwebtoken.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
     })
     .catch((err) => next(err));
